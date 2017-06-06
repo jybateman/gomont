@@ -1,0 +1,23 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+
+  <nav class="navbar navbar-default">
+    <span class="navbar-brand">Gomont</span>
+    {{if .Nav}}
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Servers<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+	  {{range .Info.Srvs}}
+          <li><a href="/home/{{.ID}}">{{.Name}}</a></li>
+ 	  {{end}}
+        </ul>
+      </li>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/home/add">Add Server</a></li>
+      <li><a href="/logout">Disconnect</a></li>
+    </ul>
+    {{end}}
+  </nav>
+</head>
