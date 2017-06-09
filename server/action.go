@@ -5,7 +5,11 @@ import (
 )
 
 func login(w http.ResponseWriter, r *http.Request) {
-	loginPage()
+	loginPage(w, r)
+}
+
+func signup(w http.ResponseWriter, r *http.Request) {
+	signupPage(w, r)
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
