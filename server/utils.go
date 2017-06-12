@@ -6,6 +6,17 @@ import (
 	"crypto/rand"
 )
 
+func checkPost(m url.Values, keys ...string) bool {
+        ok := true
+
+        for _, key := range keys {
+                if _, ok = m[key]; !ok {
+                        return false
+                }
+        }
+        return true
+}
+
 func genUUID() (string, error) {
         uuid := make([]byte, 16)
         n, err := io.ReadFull(rand.Reader, uuid)
