@@ -85,7 +85,7 @@ func addAdmin(user, pass string) error {
 	return nil
 }
 
-func isAdmin() bool {
+func hasAdmin() bool {
 	var res int
 	
 	db, err := sql.Open("mysql",
