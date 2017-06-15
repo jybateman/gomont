@@ -9,3 +9,4 @@ type Server struct {
         Address string
         Status string
 }
+

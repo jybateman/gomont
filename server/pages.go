@@ -33,5 +33,9 @@ func signupPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func serversPage() {
-
+	tpl, err := template.ParseFiles("html/home.html", "html/header.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
