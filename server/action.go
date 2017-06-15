@@ -20,7 +20,13 @@ func signup(w http.ResponseWriter, r *http.Request) {
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
-
+	loginPage(w, r)
+	if !checkPost(r.PostForm, "username", "password") {
+		return
+	}
+	user := strings.TrimSpace(r.PostFormValue("newusername"))
+	pass := strings.TrimSpace(r.PostFormValue("password"))
+	checkAccount(user, pass)
 }
 
 func servers(w http.ResponseWriter, r *http.Request) {
