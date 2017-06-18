@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"net/http"
 )
@@ -46,7 +47,10 @@ func logout(w http.ResponseWriter, r *http.Request) {
 }
 
 func servers(w http.ResponseWriter, r *http.Request) {
-	p := &Page{HeaderMessage{Visible: "hidden"}, false, nil}
+	var s Servers
+	var err error
+	
+	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
 	// 	p.Mess.Type = "danger"
 	// p.Mess.Message = "Please fill out all fields"
 	// p.Mess.Visible = ""
@@ -54,17 +58,20 @@ func servers(w http.ResponseWriter, r *http.Request) {
 	if !isSession(r) {
 		http.Redirect(w, r, "/login", 302)
 	}
-	Srv, err := getServer()
-	if err == nil {
-		p.Info = Srv
+	s.Srvs, err = getServer()
+	if err != nil {
+		fmt.Println(err)
 	}
+	p.Info = s
 	serversPage(w, r, p)
 }
 
 func addSrv(w http.ResponseWriter, r *http.Request) {
-	p := &Page{HeaderMessage{Visible: "hidden"}, false, nil}
+	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
 	if !isSession(r) {
 		http.Redirect(w, r, "/login", 302)
 	}
+	// if !checkPost(r.PostForm, "newusername", "password", "confpassword") {
+	// }
 	addSrvPage(w, r, p)
 }

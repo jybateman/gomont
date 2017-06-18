@@ -1,5 +1,9 @@
 package main
 
+type Servers struct {
+        Srvs []Server
+}
+
 type Server struct {
 	ID int
         Name string
