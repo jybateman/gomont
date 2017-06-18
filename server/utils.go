@@ -11,7 +11,6 @@ func checkPost(m url.Values, keys ...string) bool {
         ok := true
 
         for _, key := range keys {
-		fmt.Println(key, m[key])
                 if _, ok = m[key]; !ok {
                         return false
                 }

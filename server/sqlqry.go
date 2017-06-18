@@ -51,12 +51,14 @@ func checkAccount(user, pass string) bool {
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 	defer db.Close()
 	rows, err := db.Query("SELECT COUNT(*) FROM admin WHERE username=? AND password=?",
 		user, pass)
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 	defer rows.Close()
