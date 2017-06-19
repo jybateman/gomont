@@ -71,7 +71,15 @@ func addSrv(w http.ResponseWriter, r *http.Request) {
 	if !isSession(r) {
 		http.Redirect(w, r, "/login", 302)
 	}
-	// if !checkPost(r.PostForm, "newusername", "password", "confpassword") {
-	// }
+	r.ParseForm()
+	if checkPost(r.PostForm, "name", "user", "pass", "addr", "port") {
+		name := strings.TrimSpace(r.PostFormValue("name"))
+		user := strings.TrimSpace(r.PostFormValue("user"))
+		pass := strings.TrimSpace(r.PostFormValue("pass"))
+		addr := strings.TrimSpace(r.PostFormValue("addr"))
+		port := strings.TrimSpace(r.PostFormValue("port"))
+		addServer(name, user, pass, port, addr)
+		http.Redirect(w, r, "/servers", 302)
+	}
 	addSrvPage(w, r, p)
 }
