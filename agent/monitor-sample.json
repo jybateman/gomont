@@ -1,0 +1,9 @@
+[{
+  "Name": "test2",
+  "Command": "./test.sh",
+  "Frequence": "1s"
+},{
+  "Name": "test",
+  "Command": "echo hello world",
+  "Frequence": "1s"
+}]
