@@ -22,10 +22,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 		addSession(w)
 		http.Redirect(w, r, "/servers", 302)
 	}
+	p.Mess.Type = "Warning"
+	p.Mess.Message = "Wrong Username/Password"
+	p.Mess.Visible = ""
+	loginPage(w, r, p)
 }
 
 func signup(w http.ResponseWriter, r *http.Request) {
-	p := &Page{HeaderMessage{Visible: "hidden"}, false, nil}	
+	p := &Page{HeaderMessage{Visible: "hidden"}, false, nil}
 	if isSession(r) {
 		http.Redirect(w, r, "/servers", 302)
 	}
@@ -40,27 +44,35 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		addSession(w)
 		http.Redirect(w, r, "/servers", 302)
 	}
+	p.Mess.Type = "Danger"
+	p.Mess.Message = "Couldn't create account"
+	p.Mess.Visible = ""
+	signupPage(w, r, p)
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
 	endSession(w, r)
+	http.Redirect(w, r, "/login", 302)
 }
 
 func servers(w http.ResponseWriter, r *http.Request) {
 	var s Servers
 	var err error
-	
+
 	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
-	// 	p.Mess.Type = "danger"
+	//	p.Mess.Type = "danger"
 	// p.Mess.Message = "Please fill out all fields"
 	// p.Mess.Visible = ""
-	
+
 	if !isSession(r) {
 		http.Redirect(w, r, "/login", 302)
 	}
 	s.Srvs, err = getServer()
 	if err != nil {
 		fmt.Println(err)
+		p.Mess.Type = "Danger"
+		p.Mess.Message = "Couldn't get Servers"
+		p.Mess.Visible = ""
 	}
 	p.Info = s
 	serversPage(w, r, p)
