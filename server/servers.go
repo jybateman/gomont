@@ -12,10 +12,11 @@ import (
 
 type Servers struct {
 	Srvs []Server
+	Curr int
 }
 
 type Server struct {
-	ID int
+	ID  int
 	Name string
 	Username string
 	Password string
@@ -132,9 +133,11 @@ func dialWS(ws *websocket.Conn) {
 
 	s.Srvs, err = getServer()
 	for i, _ := range s.Srvs {
-		s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
-		if err != nil {
-			s.Srvs[i].conn = nil
+		if s.Srvs[i].ID == s.Curr {
+			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
+			if err != nil {
+				s.Srvs[i].conn = nil
+			}
 		}
 	}
 	s.commJS(ws)

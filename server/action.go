@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"strconv"
 	"net/http"
 )
 
@@ -97,6 +98,8 @@ func server(w http.ResponseWriter, r *http.Request) {
 		p.Mess.Message = "Couldn't get Servers"
 		p.Mess.Visible = ""
 	}
+	id := r.URL.Path[len("/server/"):]
+	s.Curr, _ = strconv.Atoi(id)
 	p.Info = s
 	serverPage(w, r, p)
 }
