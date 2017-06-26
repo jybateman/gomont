@@ -6,6 +6,7 @@ import (
 	"net"
 	"time"
 	"bytes"
+	"strings"
 	"strconv"
 	"golang.org/x/net/websocket"
 )
@@ -131,11 +132,16 @@ func dialWS(ws *websocket.Conn) {
 	var err error
 	var s Servers
 
+	id := strings.Split(ws.Request().URL.String(), "/")
 	s.Srvs, err = getServer()
+	if len(id) > 2 {
+		s.Curr, _  = strconv.Atoi(id[2])
+	}
 	for i, _ := range s.Srvs {
 		if s.Srvs[i].ID == s.Curr {
 			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
 			if err != nil {
+				fmt.Println(err)
 				s.Srvs[i].conn = nil
 			}
 		}

@@ -13,7 +13,7 @@ func main() {
 	http.HandleFunc("/servers", servers)
 	http.HandleFunc("/server/", server)
 	http.HandleFunc("/addserver", addSrv)
-	http.Handle("/ws", websocket.Handler(dialWS))
+	http.Handle("/ws/", websocket.Handler(dialWS))
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("css"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
 	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("files"))))

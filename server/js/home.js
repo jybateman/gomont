@@ -37,9 +37,12 @@ function checkStatus(cells, stat) {
 
 var graph = new Graph();
 var ip = location.host;
-var ws = new WebSocket("ws://"+ip+"/ws");
+var path = window.location.pathname;
+var id = path.split("/");
+var ws = new WebSocket("ws://"+ip+"/ws/"+id[2]);
 ws.onmessage = function (event) {
     if (event.data != "") {
+	console.log("hell oworld");
 	var res = explodeString(event.data);
 	var table = document.getElementById(res[0]);
 	// var cmd = table.querySelector("#"+res[1]);
@@ -59,9 +62,12 @@ ws.onmessage = function (event) {
 	//     checkStatus(cells, res[2]);
 	// }
 
+	console.log("hello world");
 	if (graph.GetMap(res[0]+res[1])) {
+	    console.log("updating graph");
 	    graph.UpdateGraph(res, ip);
 	} else {
+	    console.log("creating graph");
 	    graph.CreateGraph(res, ip);
 	}
     }
