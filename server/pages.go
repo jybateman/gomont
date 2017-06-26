@@ -22,7 +22,7 @@ func loginPage(w http.ResponseWriter, r *http.Request, p *Page) {
 	tpl, err := template.ParseFiles("html/login.html", "html/header.html")
 	if err != nil {
 		fmt.Println(err)
- 		return
+		return
 	}
 	err = r.ParseForm()
 	if err != nil {
@@ -71,5 +71,5 @@ func addSrvPage(w http.ResponseWriter, r *http.Request, p *Page) {
 		fmt.Println(err)
 		return
 	}
-	tpl.Execute(w, nil)
+	tpl.Execute(w, p)
 }

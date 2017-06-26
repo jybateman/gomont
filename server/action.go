@@ -79,6 +79,9 @@ func servers(w http.ResponseWriter, r *http.Request) {
 }
 
 func addSrv(w http.ResponseWriter, r *http.Request) {
+	var s Servers
+	var err error
+
 	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
 	if !isSession(r) {
 		http.Redirect(w, r, "/login", 302)
@@ -93,5 +96,13 @@ func addSrv(w http.ResponseWriter, r *http.Request) {
 		addServer(name, user, pass, port, addr)
 		http.Redirect(w, r, "/servers", 302)
 	}
+	s.Srvs, err = getServer()
+	if err != nil {
+		fmt.Println(err)
+		p.Mess.Type = "Danger"
+		p.Mess.Message = "Couldn't get Servers"
+		p.Mess.Visible = ""
+	}
+	p.Info = s
 	addSrvPage(w, r, p)
 }
