@@ -78,6 +78,29 @@ func servers(w http.ResponseWriter, r *http.Request) {
 	serversPage(w, r, p)
 }
 
+func server(w http.ResponseWriter, r *http.Request) {
+	var s Servers
+	var err error
+
+	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
+	//	p.Mess.Type = "danger"
+	// p.Mess.Message = "Please fill out all fields"
+	// p.Mess.Visible = ""
+
+	if !isSession(r) {
+		http.Redirect(w, r, "/login", 302)
+	}
+	s.Srvs, err = getServer()
+	if err != nil {
+		fmt.Println(err)
+		p.Mess.Type = "Danger"
+		p.Mess.Message = "Couldn't get Servers"
+		p.Mess.Visible = ""
+	}
+	p.Info = s
+	serverPage(w, r, p)
+}
+
 func addSrv(w http.ResponseWriter, r *http.Request) {
 	var s Servers
 	var err error
