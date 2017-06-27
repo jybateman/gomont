@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo -n 1
+echo -n $RANDOM
 
-exit 42
+exit `expr $RANDOM % 3`

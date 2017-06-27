@@ -6,24 +6,21 @@
 	<table class="table table-condensed table-bordered">
 	  <thead>
 	    <tr>
-      	      <td>Servers</td>
-     	    </tr>
- 	  </thead>
+	      <td>Servers</td>
+	    </tr>
+	  </thead>
 	  <tbody>
 	    {{range .Info.Srvs}}
-      	    <tr id="{{.ID}}">
-      	      <td><a href="/server/{{.ID}}">{{.Name}}</a></td>
-      	      <!-- <td>{{.Status}}</td> -->
-      	    </tr>
- 	    {{end}}
+	    <tr id="{{.ID}}">
+	      <td><a href="/server/{{.ID}}">{{.Name}}</a></td>
+	      <!-- <td>{{.Status}}</td> -->
+	    </tr>
+	    {{end}}
 	  </tbody>
 	</table>
 	<br>
       </div>
     </div>
-    <!-- <script src="/js/home.js"></script> -->
-    <!-- <script src="/js/graph.js"></script> -->
-    <!-- <script src="/js/dygraph-combined.js"></script> -->
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
   </body>
