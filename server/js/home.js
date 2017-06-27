@@ -42,25 +42,25 @@ var id = path.split("/");
 var ws = new WebSocket("ws://"+ip+"/ws/"+id[2]);
 ws.onmessage = function (event) {
     if (event.data != "") {
-	console.log("hell oworld");
 	var res = explodeString(event.data);
+
 	var table = document.getElementById(res[0]);
-	// var cmd = table.querySelector("#"+res[1]);
-	// if (cmd == null) {
-	//     var body = table.getElementsByTagName("tbody");
-	//     var row = body[0].insertRow(0);
-	//     var name = row.insertCell(0);
-	//     var out = row.insertCell(1);
-	//     row.id = res[1];
-	//     name.innerHTML = res[1];
-	//     out.innerHTML = res[3];
-	//     checkStatus(row.cells, res[2]);
-	// } else {
-	//     var cells = cmd.getElementsByTagName("td");
-	//     cells[0].innerHTML = res[1];
-	//     cells[1].innerHTML = res[3];
-	//     checkStatus(cells, res[2]);
-	// }
+	var cmd = table.querySelector("#"+res[1]);
+	if (cmd == null) {
+	    var body = table.getElementsByTagName("tbody");
+	    var row = body[0].insertRow(0);
+	    var name = row.insertCell(0);
+	    var out = row.insertCell(1);
+	    row.id = res[1];
+	    name.innerHTML = res[1];
+	    out.innerHTML = res[3];
+	    checkStatus(row.cells, res[2]);
+	} else {
+	    var cells = cmd.getElementsByTagName("td");
+	    cells[0].innerHTML = res[1];
+	    cells[1].innerHTML = res[3];
+	    checkStatus(cells, res[2]);
+	}
 
 	console.log("hello world");
 	if (graph.GetMap(res[0]+res[1])) {

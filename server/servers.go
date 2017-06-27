@@ -135,7 +135,7 @@ func dialWS(ws *websocket.Conn) {
 	id := strings.Split(ws.Request().URL.String(), "/")
 	s.Srvs, err = getServer()
 	if len(id) > 2 {
-		s.Curr, _  = strconv.Atoi(id[2])
+		s.Curr, _ = strconv.Atoi(id[2])
 	}
 	for i, _ := range s.Srvs {
 		if s.Srvs[i].ID == s.Curr {
