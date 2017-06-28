@@ -1,9 +1,9 @@
 [{
-  "Name": "test2",
+  "Name": "Random",
   "Command": "./test.sh",
   "Frequence": "1s"
 },{
-  "Name": "test",
-  "Command": "echo -n 2",
+  "Name": "CPU",
+  "Command": "./cpu.sh",
   "Frequence": "1s"
 }]
