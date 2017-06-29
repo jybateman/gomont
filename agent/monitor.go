@@ -18,6 +18,7 @@ type monitor struct {
 	Name string
 	Command string
 	Frequence string
+	Graph bool
 	d time.Time
 }
 
@@ -38,7 +39,7 @@ func (mon *monitor) execCmd(conn net.Conn) error {
 			return err
 		}
 	}
-	_, err = conn.Write(appendBytes([]byte(mon.Name), []byte(strconv.Itoa(status)), out))
+	_, err = conn.Write(appendBytes([]byte(mon.Name), []byte(strconv.Itoa(status)), strconv.AppendBool(nil, mon.Graph), out))
 	if err != nil {
 		fmt.Println("terminating communication with server")
 		conn.Close()
@@ -55,7 +56,7 @@ func setTimeout(mon []monitor) {
 		}
 	}
 }
- 
+
 func updateTime(mon []monitor, conn net.Conn) error {
 	t := time.Now()
 	for idx, _ := range mon {
@@ -75,7 +76,7 @@ func StartMonitor(conn net.Conn) {
 	if err != nil {
 		return
 	}
-	json.Unmarshal(b, &mon)	
+	json.Unmarshal(b, &mon)
 	t := time.Now()
 	for idx, _ := range mon {
 		s, _ := time.ParseDuration(mon[idx].Frequence)
@@ -89,5 +90,5 @@ func StartMonitor(conn net.Conn) {
 			return
 		}
 		setTimeout(mon)
-	}	
+	}
 }

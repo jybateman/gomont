@@ -1,9 +1,12 @@
 [{
-  "Name": "Random",
-  "Command": "./test.sh",
-  "Frequence": "1s"
+    "Name": "Random",
+    "Command": "./test.sh",
+    "Frequence": "1s",
+    "Graph": false
+
 },{
-  "Name": "CPU",
-  "Command": "./cpu.sh",
-  "Frequence": "1s"
+    "Name": "CPU",
+    "Command": "./cpu.sh",
+    "Frequence": "1s",
+    "Graph": false
 }]

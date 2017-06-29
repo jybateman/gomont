@@ -73,7 +73,7 @@ func (s *Server) storeData() {
 		select {
 		case data := <- ch:
 			res := explodeString(data)
-			if len(res) > 3 {
+			if len(res) > 4 {
 				t := time.Now()
 				_, err := os.Stat("./files/"+strconv.Itoa(s.ID)+"/"+res[1]+".csv")
 				if !os.IsNotExist(err) {
@@ -85,7 +85,7 @@ func (s *Server) storeData() {
 					}
 				}
 				if err == nil {
-					_, err = f.WriteString(fmt.Sprintf("%d/%02d/%02d %02d:%02d:%02d,%s\n", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), res[3]))
+					_, err = f.WriteString(fmt.Sprintf("%d/%02d/%02d %02d:%02d:%02d,%s\n", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), res[4]))
 					f.Sync()
 					f.Close()
 				}
