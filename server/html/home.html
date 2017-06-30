@@ -7,13 +7,17 @@
 	  <thead>
 	    <tr>
 	      <td>Servers</td>
+	      <td>Actions</td>
 	    </tr>
 	  </thead>
 	  <tbody>
 	    {{range .Info.Srvs}}
 	    <tr id="{{.ID}}">
 	      <td><a href="/server/{{.ID}}">{{.Name}}</a></td>
+	      <td class="col-md-1"><div class="btn-group"><a type="button" class="btn btn-primary" href="/server/{{.ID}}"><span class="glyphicon glyphicon-wrench"></span></a><a href="/server/{{.ID}}"><a type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></div>
+	      </td>
 	      <!-- <td>{{.Status}}</td> -->
+
 	    </tr>
 	    {{end}}
 	  </tbody>
