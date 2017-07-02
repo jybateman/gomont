@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	
+
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -25,7 +25,7 @@ func addServer(name, user, pass, port, addr string) error {
 
 func getServer() ([]Server, error) {
 	var svrs []Server
-	
+
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
 	if err != nil {
@@ -47,7 +47,7 @@ func getServer() ([]Server, error) {
 
 func checkAccount(user, pass string) bool {
 	var res int
-	
+
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
 	if err != nil {
@@ -89,7 +89,7 @@ func addAdmin(user, pass string) error {
 
 func hasAdmin() bool {
 	var res int
-	
+
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
 	if err != nil {
@@ -111,3 +111,18 @@ func hasAdmin() bool {
 	return true
 }
 
+func delServer(id string) error {
+	db, err := sql.Open("mysql",
+		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	_, err = db.Exec("DELETE FROM server WHERE id = ?",
+		id)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}

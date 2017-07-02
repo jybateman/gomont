@@ -132,3 +132,8 @@ func addSrv(w http.ResponseWriter, r *http.Request) {
 	p.Info = s
 	addSrvPage(w, r, p)
 }
+
+func delSrv(id int) {
+	, _ = strconv.Atoi(id)
+	http.Redirect(w, r, "/servers", 302)
+}
