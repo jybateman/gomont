@@ -1,6 +1,6 @@
 package main
 
-import (
+ import (
 	"fmt"
 	"net/http"
 	"html/template"
@@ -88,6 +88,16 @@ func addSrvPage(w http.ResponseWriter, r *http.Request, p *Page) {
 	tpl.Execute(w, p)
 }
 
-func editSrvPage() {
-
+func editSrvPage(w http.ResponseWriter, r *http.Request, p *Page) {
+	tpl, err := template.ParseFiles("html/editserver.html", "html/header.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = r.ParseForm()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	tpl.Execute(w, p)
 }

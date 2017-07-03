@@ -74,6 +74,7 @@ func StartMonitor(conn net.Conn) {
 	var mon []monitor
 	b, err := ioutil.ReadFile("monitor.json")
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	json.Unmarshal(b, &mon)

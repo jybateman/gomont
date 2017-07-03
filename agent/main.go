@@ -5,12 +5,20 @@ import (
 	"fmt"
 	"bytes"
 	"strconv"
+	"io/ioutil"
+	"encoding/json"
 )
+
+type config struct {
+	Port string
+	Username string
+	Password string
+}
 
 // TODO error manage
 func appendBytes(by ...[]byte) []byte {
 	var ab bytes.Buffer
-	
+
 	for _, b := range by {
 		ab.WriteString(strconv.Itoa(len(b)))
 		ab.WriteString(":")
@@ -21,7 +29,16 @@ func appendBytes(by ...[]byte) []byte {
 }
 
 func main() {
-	ln, err := net.Listen("tcp", ":4242")
+	var cfg config
+
+	b, err := ioutil.ReadFile("config.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	json.Unmarshal(b, &cfg)
+	fmt.Println(cfg)
+	ln, err := net.Listen("tcp", ":"+cfg.Port)
 	if err != nil {
 		fmt.Println(err)
 		return
