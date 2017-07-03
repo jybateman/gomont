@@ -141,7 +141,37 @@ func addSrv(w http.ResponseWriter, r *http.Request) {
 	addSrvPage(w, r, p)
 }
 
-// func delSrv(id int) {
-//	id , _ = strconv.Atoi(id)
-//	http.Redirect(w, r, "/servers", 302)
-// }
+func editSrv(w http.ResponseWriter, r *http.Request) {
+	var s Servers
+	var err error
+
+	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
+	if !isSession(r) {
+		http.Redirect(w, r, "/login", 302)
+	}
+	id := r.URL.Path[len("/editserver/"):]
+	r.ParseForm()
+	if checkPost(r.PostForm, "name", "user", "pass", "addr", "port") {
+		name := strings.TrimSpace(r.PostFormValue("name"))
+		user := strings.TrimSpace(r.PostFormValue("user"))
+		pass := strings.TrimSpace(r.PostFormValue("pass"))
+		addr := strings.TrimSpace(r.PostFormValue("addr"))
+		port := strings.TrimSpace(r.PostFormValue("port"))
+		fmt.Println(name, user, pass, port, addr, id, r.URL.Path)
+		err = updateServer(name, user, pass, port, addr, id)
+		if err != nil {
+			fmt.Println(err)
+		}
+		http.Redirect(w, r, "/servers", 302)
+	}
+	s.Srvs, _ = getServer()
+	s.Srv, err = getServerbyId(id)
+	if err != nil {
+		fmt.Println(err)
+		p.Mess.Type = "Danger"
+		p.Mess.Message = "Couldn't get Server"
+		p.Mess.Visible = ""
+	}
+	p.Info = s
+	editSrvPage(w, r, p)
+}

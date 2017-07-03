@@ -45,6 +45,27 @@ func getServer() ([]Server, error) {
 	return svrs, nil
 }
 
+func getServerbyId(id string) (Server, error) {
+	var svr Server
+
+	db, err := sql.Open("mysql",
+		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+	if err != nil {
+		return svr, err
+	}
+	defer db.Close()
+	rows, err := db.Query("SELECT id, name, username, password, address, port FROM server WHERE id=?", id)
+	if err != nil {
+		return svr, err
+	}
+
+	rows.Next()
+	rows.Scan(&svr.ID, &svr.Name, &svr.Username, &svr.Password, &svr.Address, &svr.Port)
+
+	defer rows.Close()
+	return svr, nil
+}
+
 func checkAccount(user, pass string) bool {
 	var res int
 
@@ -120,6 +141,22 @@ func delServer(id string) error {
 	defer db.Close()
 	_, err = db.Exec("DELETE FROM server WHERE id = ?",
 		id)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func updateServer(name, user, pass, port, addr, id string) error {
+	db, err := sql.Open("mysql",
+		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	_, err = db.Exec("UPDATE server SET name=?, username=?, password=?, address=?, port=? WHERE id=?",
+		name, user, pass, addr, port, id)
 	if err != nil {
 		fmt.Println(err)
 		return err

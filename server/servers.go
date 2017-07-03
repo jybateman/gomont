@@ -13,6 +13,7 @@ import (
 
 type Servers struct {
 	Srvs []Server
+	Srv Server
 	Curr int
 }
 
