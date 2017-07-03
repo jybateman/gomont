@@ -87,3 +87,7 @@ func addSrvPage(w http.ResponseWriter, r *http.Request, p *Page) {
 	}
 	tpl.Execute(w, p)
 }
+
+func editSrvPage() {
+
+}

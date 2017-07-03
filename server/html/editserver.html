@@ -1,0 +1,24 @@
+<html>
+  {{template "header.html" .}}
+  <body>
+    <div class="container">
+      <div class="alert alert-{{.Mess.Type}} {{.Mess.Visible}}" role="alert">{{.Mess.Message}}</div>
+
+      <form class="login-form well center-block" method="update" action="server/{{.Info.ID}}">
+	<h3 style="text-align:center">Edit Server</h3>
+	<span>Name</span>
+	<input type="text" placeholder="Server Name" name="name" class="form-control" value="{{.Info.Name}}"/>
+	<span>Username</span>
+	<input type="text" placeholder="Username" name="user" class="form-control" value="{{.Info.Username}}"/>
+	<span>Password</span>
+	<input type="password" placeholder="Password" name="pass" class="form-control" value="{{.Info.Password}}"/>
+	<span>Address</span>
+	<input type="text" placeholder="Address" name="addr" class="form-control" value="{{.Info.Address}}"/>
+	<span>Port</span>
+	<input type="text" placeholder="Port" name="port" class="form-control" value="{{.Info.Port}}"/>
+	<button class="btn btn-primary" style="100%">Edit</button>
+
+      </form>
+    </div>
+  </body>
+</html>
