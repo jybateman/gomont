@@ -14,7 +14,7 @@
 	    {{range .Info.Srvs}}
 	    <tr id="{{.ID}}" data-toggle="tooltip" {{if .Status}} title="Up" class="success" {{else}} title="Down" class="danger" {{end}}>
 	      <td><a href="/server/{{.ID}}">{{.Name}}</a></td>
-	      <td class="col-md-1"><div class="btn-group"><a data-toggle="tooltip" title="Customise" type="button" class="btn btn-primary" href="/server/{{.ID}}"><span class="glyphicon glyphicon-wrench"></span></a><a data-toggle="tooltip" title="Delete" href="/server/{{.ID}}" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a></div>
+	      <td class="col-md-1"><div class="btn-group"><a data-toggle="tooltip" title="Customise" type="button" class="btn btn-primary" href="/server/{{.ID}}"><span class="glyphicon glyphicon-wrench"></span></a><form style="all:unset;" action="/server/{{.ID}}" method="post"><input  type="hidden" name="_method" value="delete" /><button style="border-top-left-radius:0; border-bottom-left-radius:0;" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></form></div>
 	      </td>
 	    </tr>
 	    {{end}}

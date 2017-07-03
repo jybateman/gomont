@@ -83,6 +83,14 @@ func server(w http.ResponseWriter, r *http.Request) {
 	var s Servers
 	var err error
 
+	r.ParseForm()
+	if checkPost(r.PostForm, "_method") && r.PostForm["_method"][0] == "delete" {
+		id := r.URL.Path[len("/server/"):]
+		delServer(id)
+		http.Redirect(w, r, "/servers", 302)
+	}
+	fmt.Println(r.PostForm)
+
 	p := &Page{HeaderMessage{Visible: "hidden"}, true, nil}
 	//	p.Mess.Type = "danger"
 	// p.Mess.Message = "Please fill out all fields"
@@ -133,7 +141,7 @@ func addSrv(w http.ResponseWriter, r *http.Request) {
 	addSrvPage(w, r, p)
 }
 
-func delSrv(id int) {
-	, _ = strconv.Atoi(id)
-	http.Redirect(w, r, "/servers", 302)
-}
+// func delSrv(id int) {
+//	id , _ = strconv.Atoi(id)
+//	http.Redirect(w, r, "/servers", 302)
+// }
