@@ -1,11 +1,30 @@
 package main
 
 import (
-	"golang.org/x/net/websocket"
+	"fmt"
 	"net/http"
+	"io/ioutil"
+	"encoding/json"
+
+	"golang.org/x/net/websocket"
 )
 
+type config struct {
+	Port string
+	Mysql sqlConf
+}
+
+var conf config
+
 func main() {
+	b, err := ioutil.ReadFile("config.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	json.Unmarshal(b, &conf)
+	fmt.Println(conf)
+
 	go dialServer()
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/signup", signup)
@@ -19,5 +38,5 @@ func main() {
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("js"))))
 	http.Handle("/fonts/", http.StripPrefix("/fonts/", http.FileServer(http.Dir("fonts"))))
 	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("files"))))
-	http.ListenAndServe(":9000", nil)
+	http.ListenAndServe(":"+conf.Port, nil)
 }

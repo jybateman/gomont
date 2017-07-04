@@ -141,11 +141,9 @@ func dialWS(ws *websocket.Conn) {
 	for i, _ := range s.Srvs {
 		if s.Srvs[i].ID == s.Curr {
 			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
-			s.Srvs[i].Status = true
 			if err != nil {
 				fmt.Println(err)
 				s.Srvs[i].conn = nil
-				s.Srvs[i].Status = false
 			}
 		}
 	}
@@ -162,9 +160,11 @@ func dialServer() {
 			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
 			if err == nil && s.Srvs[i].conn != nil {
 				fmt.Println("Connected to server")
+				s.Srvs[i].Status = true
 				go s.Srvs[i].storeData()
 			} else {
 				fmt.Println("Couldn't connect to server")
+				s.Srvs[i].Status = false
 			}
 		}
 	}

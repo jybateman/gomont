@@ -7,6 +7,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type sqlConf struct {
+	Port string
+	IP string
+	Username string
+	Password string
+}
+
 func addServer(name, user, pass, port, addr string) error {
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
@@ -27,7 +34,7 @@ func getServer() ([]Server, error) {
 	var svrs []Server
 
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		return svrs, err
 	}
@@ -49,7 +56,7 @@ func getServerbyId(id string) (Server, error) {
 	var svr Server
 
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		return svr, err
 	}
@@ -70,7 +77,7 @@ func checkAccount(user, pass string) bool {
 	var res int
 
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -93,7 +100,7 @@ func checkAccount(user, pass string) bool {
 
 func addAdmin(user, pass string) error {
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		fmt.Println(err)
 		return err
@@ -112,7 +119,7 @@ func hasAdmin() bool {
 	var res int
 
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -134,7 +141,7 @@ func hasAdmin() bool {
 
 func delServer(id string) error {
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		return err
 	}
@@ -150,7 +157,7 @@ func delServer(id string) error {
 
 func updateServer(name, user, pass, port, addr, id string) error {
 	db, err := sql.Open("mysql",
-		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
+		conf.Mysql.Username+":"+conf.Mysql.Password+"@tcp("+conf.Mysql.IP+":"+conf.Mysql.Port+")/gomont")
 	if err != nil {
 		return err
 	}
