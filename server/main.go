@@ -23,7 +23,6 @@ func main() {
 		return
 	}
 	json.Unmarshal(b, &conf)
-	fmt.Println(conf)
 
 	go dialServer()
 	http.HandleFunc("/login", login)

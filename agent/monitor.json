@@ -8,5 +8,5 @@
     "Name": "CPU",
     "Command": "./cpu.sh",
     "Frequence": "1s",
-    "Graph": false
+    "Graph": true
 }]
