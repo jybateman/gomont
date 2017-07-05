@@ -24,6 +24,10 @@ func main() {
 	}
 	json.Unmarshal(b, &conf)
 
+
+	addS = make(chan Server)
+	delS = make(chan int)
+
 	go dialServer()
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/signup", signup)

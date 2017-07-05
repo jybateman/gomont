@@ -14,20 +14,24 @@ type sqlConf struct {
 	Password string
 }
 
-func addServer(name, user, pass, port, addr string) error {
+func addServer(name, user, pass, port, addr string) (int, error) {
+	var res sql.Result
+	var id int64
+
 	db, err := sql.Open("mysql",
 		"root:helloworld@tcp(127.0.0.1:3306)/gomont")
 	if err != nil {
-		return err
+		return -1, err
 	}
 	defer db.Close()
-	_, err = db.Exec("INSERT INTO server (name, username, password, address, port) VALUE (?, ?, ?, ?, ?)",
+	res, err = db.Exec("INSERT INTO server (name, username, password, address, port) VALUE (?, ?, ?, ?, ?)",
 		name, user, pass, addr, port)
 	if err != nil {
 		fmt.Println(err)
-		return err
+		return -1, err
 	}
-	return nil
+	id, _ = res.LastInsertId()
+	return int(id), nil
 }
 
 func getServer() ([]Server, error) {

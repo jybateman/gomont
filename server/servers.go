@@ -172,9 +172,16 @@ func dialServer() {
 	select {
 	case srv := <- addS:
 		s.Srvs = append(s.Srvs, srv)
-		break
+		srv.conn, err = net.Dial("tcp", srv.Address+":"+srv.Port)
+		if err == nil && srv.conn != nil {
+			fmt.Println("Connected to server")
+			srv.Status = true
+			go srv.storeData()
+		} else {
+			fmt.Println("Couldn't connect to server")
+			srv.Status = false
+		}
 	case id := <- delS:
 		_ = id
-		break
 	}
 }
