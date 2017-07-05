@@ -140,7 +140,8 @@ func dialWS(ws *websocket.Conn) {
 	}
 	for i, _ := range s.Srvs {
 		if s.Srvs[i].ID == s.Curr {
-			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
+			//s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
+			s.Srvs[i].conn, err = authDial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port, s.Srvs[i].Username, s.Srvs[i].Password)
 			if err != nil {
 				fmt.Println(err)
 				s.Srvs[i].conn = nil
@@ -157,7 +158,8 @@ func dialServer() {
 	s.Srvs, err = getServer()
 	for i, _ := range s.Srvs {
 		if s.Srvs[i].conn == nil {
-			s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
+			//s.Srvs[i].conn, err = net.Dial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port)
+			s.Srvs[i].conn, err = authDial("tcp", s.Srvs[i].Address+":"+s.Srvs[i].Port, s.Srvs[i].Username, s.Srvs[i].Password)
 			if err == nil && s.Srvs[i].conn != nil {
 				fmt.Println("Connected to server")
 				s.Srvs[i].Status = true
@@ -172,7 +174,8 @@ func dialServer() {
 	select {
 	case srv := <- addS:
 		s.Srvs = append(s.Srvs, srv)
-		srv.conn, err = net.Dial("tcp", srv.Address+":"+srv.Port)
+		// srv.conn, err = net.Dial("tcp", srv.Address+":"+srv.Port)
+		srv.conn, err = authDial("tcp", srv.Address+":"+srv.Port, srv.Username, srv.Password)
 		if err == nil && srv.conn != nil {
 			fmt.Println("Connected to server")
 			srv.Status = true
@@ -184,4 +187,13 @@ func dialServer() {
 	case id := <- delS:
 		_ = id
 	}
+}
+
+func authDial(proto, addr, user, pass string) (net.Conn, error) {
+	conn, err := net.Dial(proto, addr)
+	if err != nil {
+		return nil, err
+	}
+	conn.Write([]byte(strconv.Itoa(len(user))+":"+user+strconv.Itoa(len(pass))+":"+pass))
+	return conn, err
 }
