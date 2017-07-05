@@ -13,32 +13,35 @@ Using the Go toolkit we can easily install the agent with a simple
 `go get github.com/jybateman/gomont/agent`.
 Once installed you will have to edit the `config.json` file which contains the `Username`, `Password` and `Port` all are strings that will be used by the Agent, this information is used so that the server can connect to the agent and start sending information.
 
+---
     {
         "Port": "4242",
         "Username": "hello",
         "Password": "world"
     }
 
+---
 You are also given an `monitor.json` as a sample. This json file contains an array of  `Name`, `Command`, `Frequence` and `Graph`, which represent the following:
 
  - `Name` is a string that associates a name to the command that will be displayed on client's interface.
  - `Command` is a string that defines the command to be executed.  *Note: all command must write the result on the standard output which will be the value displayed on the client's interface, and must return an exit value of 0, 1 or 2 which represent the state OK, Warning and Danger respectively*
  - `Frequence`is a string that represents the frequency that the command will be executed, this can be useful for commands whose state does not change frequently like disk size, validtime units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
  - `Graph` is a boolean that defines if a command will be displayed as a graph or a table, this is useful for commands whose previous state is not important like CPU frequency.
-
+ 
+---------
     [{
         "Name": "Random",
         "Command": "./test.sh",
         "Frequence": "1s",
         "Graph": false
-    
     },{
-        "Name": "CPU",
-        "Command": "./cpu.sh",
-        "Frequence": "1s",
-        "Graph": true
-    }]
+            "Name": "CPU",
+            "Command": "./cpu.sh",
+            "Frequence": "1s",
+            "Graph": true
+        }]
 
+---
 Server
 --------------------
 Like the Agent the Server can be installed by using the Go toolkit `go get github.com/jybateman/gomont/server`.
